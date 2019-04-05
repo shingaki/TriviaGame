@@ -1,0 +1,40 @@
+.heading {
+    margin-top: 150px;
+    color: red;
+    text-align: center;
+}
+
+.timer-box {
+    border: 1px black solid;
+    padding: 10px;
+    margin: 50px;
+}
+
+.timer {
+    font-style: italic;
+    font-size: x-large;
+    text-align: center;
+}
+
+IMG.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.start-button {
+    width: 235px;
+    height: 224px%;
+}
+
+#img-as-background img {
+    position: absolute;
+    width: 100%;
+    height: 140%;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.40;
+    background-position: center;
+}
