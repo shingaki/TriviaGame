@@ -152,70 +152,69 @@ var trivaInput =
     ]
 
 
-    var intervalID;
-    var time = 30;
-    var wins = 0;
-    var loses = 0;
-    var unanswered = 0;
+var intervalID;
+var time = 30;
+var wins = 0;
+var loses = 0;
+var unanswered = 0;
 
-    var youWonMessage = "You Won";
-    var youLostMessage = "Nope!";
-    var timesUp = 'Time is Up!'
+var youWonMessage = "You Won";
+var youLostMessage = "Nope!";
+var timesUp = 'Time is Up!'
 
 
-    function startTimer()
-    {
-        intervalID = setInterval(count, 1000);
-    }
+function startTimer()
+{
+    intervalID = setInterval(count, 1000);
+}
 
-    function count() {
-        time--;
+function count() {
+    time--;
 
-        var converted = timeConverter(time);
-        console.log(converted);
+    var converted = timeConverter(time);
+    console.log(converted);
 
-        $('#timer').text(converted);
-    }
+    $('#timer').text(converted);
+}
 
-    function timeConverter(t) {
-        var minutes = Math.floor(t / 60);
-        var seconds = t - minutes * 60;
-            return seconds;
-    }
+function timeConverter(t) {
+    var minutes = Math.floor(t / 60);
+    var seconds = t - minutes * 60;""
+    return seconds;
+}
 
 // randomly select one of the Movies
-    function getRandomNumber() {
-        var randomNumber = Math.floor(Math.random() * 10);
+function getRandomNumber() {
+    var randomNumber = Math.floor(Math.random() * 10);
 
-        return randomNumber;
-    }
+    return randomNumber;
+}
 
 
 function getQuestionAndAnswers()
 {
     var QID = getRandomNumber();
-            $('#question').replaceWith(trivaInput[QID].question);
-            $('#answer1').replaceWith(trivaInput[QID].answer1);
-            $('#answer2').replaceWith(trivaInput[QID].answer2);
-            $('#answer3').replaceWith(trivaInput[QID].answer3);
-            $('#answer4').replaceWith(trivaInput[QID].answer4);
-        // put question on the page
-        // put answers on the page
-        // start the clock
+    $("#question").replaceWith(trivaInput[QID].question);
+
+    $("#question").addClass("question-style");
+
+    $('#answer1').replaceWith(trivaInput[QID].answer1);
+
+    $("#row-1").addClass("answer-style answer-border");
+
+    $('#answer2').replaceWith(trivaInput[QID].answer2);
+
+    $("#row-2").addClass("answer-style answer-border");
+
+    $('#answer3').replaceWith(trivaInput[QID].answer3);
+
+    $("#row-3").addClass("answer-style answer-border");
+
+    $('#answer4').replaceWith(trivaInput[QID].answer4);
+
+    $("#row-4").addClass("answer-style answer-border");
+
 }
-
-getQuestionAndAnswers();
-
-
-
-    var QID = getRandomNumber();
-    console.log("Random Number " + QID);
-
-
-$('#answer1').text("Answer One");
-$('#answer2').text("Answer Two");
-$('#answer3').text("Answer Three");
-$('#answer4').text("Answer Four");
 
 
 
@@ -231,6 +230,13 @@ function resetPage()
 }
 
 
+$("#start-button").on("click", function() {
+    $("#start-button").addClass("hide-button");
+    startTimer();
+    getQuestionAndAnswers();
+})
+
+
 
 
 
@@ -241,18 +247,18 @@ function resetPage()
 // get the question and answer to display on the page
 // start the clock
 // if wrong answer
-    // stop clock
-    // increment losses by 1
-    // show the image of the right answer
-    // show the right answer
-    // wait 5 seconds
-    // check if last question
-        // if not last question - then get the next random number and repeat
-        // if last number then set the page to show the losses, wins, unanswered and the restart button
+// stop clock
+// increment losses by 1
+// show the image of the right answer
+// show the right answer
+// wait 5 seconds
+// check if last question
+// if not last question - then get the next random number and repeat
+// if last number then set the page to show the losses, wins, unanswered and the restart button
 // if restart button pushed
-    // clear out the variables
-    // start the clock
-    // randomluy select the next question
+// clear out the variables
+// start the clock
+// randomluy select the next question
 
 
 
