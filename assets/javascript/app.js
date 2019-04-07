@@ -106,6 +106,8 @@ var youLostMessage = "Nope!";
 var timesUp = 'Time is Up!'
 
 var correctAnswer = "";
+var clockRunning = false;
+
 
 var charImage;
 
@@ -113,6 +115,7 @@ var charImage;
 function startTimer()
 {
     intervalID = setInterval(count, 1000);
+    clockRunning = true;
 }
 
 function count() {
@@ -133,6 +136,7 @@ function timeConverter(t) {
 function stop() {
 
     clearInterval(intervalID);
+    clockRunning = false;
 }
 
 // randomly select one of the Movies
@@ -155,18 +159,37 @@ function getQuestionAndAnswers()
     // set that the question has been used
     trivaInput[QID].used = "Y";
 
-    // put the answers into the tags and the hover
-    $("#question").replaceWith(trivaInput[QID].question);
-    $("#question").addClass("question-style");
+    $("#row-one").text("");
+    $("#row-two").text("");
+    $("#row-three").text("");
 
-    // display the answers for the questions on the page
 
-    for (var i = 0; trivaInput[QID].answer.length >= i; i++) {
+    var question = $("<div>");
+    question.addClass("question-style col-md-10 text-center");
+    question.text(trivaInput[QID].question);
+    $("#row-one").append(question);
 
-        $("#answer" + i).replaceWith(trivaInput[QID].answer[i])
-        $("#col-answer-" + i).addClass("answer-style answer-border");
+    var answerOne = $("<div>");
+    answerOne.addClass("answer-style answer-border col-md-10 text-center");
+    answerOne.text(trivaInput[QID].answer[0]);
+    $("#row-two").append(answerOne);
 
-    }
+    var answerTwo = $("<div>");
+    answerTwo.addClass("answer-style answer-border col-md-10 text-center");
+    answerTwo.text(trivaInput[QID].answer[1]);
+    $("#row-three").append(answerTwo);
+
+    var answerThree = $("<div>");
+    answerThree.addClass("answer-style answer-border col-md-10 text-center");
+    answerThree.text(trivaInput[QID].answer[2]);
+    $("#row-four").append(answerThree);
+
+    var answerFour = $("<div>");
+    answerFour.addClass("answer-style answer-border col-md-10 text-center");
+    answerFour.text(trivaInput[QID].answer[3]);
+    $("#row-five").append(answerFour);
+
+
 
 }
 
@@ -185,28 +208,30 @@ function checkIfCorrect(answerID)
 
     console.log("answerID " + answerID);
     console.log("QID " + QID);
-
     console.log(trivaInput[QID].status[answerID]);
+
         if (trivaInput[QID].status[answerID] === "C") {
-            $("#row-question").empty();
-            $("#row-0").empty();
-            $("#row-1").empty();
             wins = wins + 1;
             charImage = $("<img>");
             charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
-            charImage.addClass("image-answer")
+            charImage.addClass("image-answer");
+
+            $("#row-one").empty();
+            $("#row-two").empty();
+            $("#row-three").empty();
+            $("#row-four").empty();
+            $("#row-five").empty();
 
 
-            $("#row-question").replaceWith("YOU WON!!!");
-            $("#row-0").append(charImage);
+            $("#row-one").append("YOU WON!!!");
+            $("#row-two").append(charImage);
+
+            setTimeout(nextQuestion, 1000 * 5);
 
 
         } else if (trivaInput[QID].status[answerID] === "W")
         {
             correctAnswer = "";
-            $("#row-question").empty();
-            $("#row-0").empty();
-            $("#row-1").empty();
             losses = losses + 1;
             charImage = $("<img>");
             charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
@@ -220,9 +245,19 @@ function checkIfCorrect(answerID)
                 }
             }
 
+            $("#row-one").empty();
+            $("#row-two").empty();
+            $("#row-three").empty();
+            $("#row-four").empty();
+            $("#row-five").empty();
 
-            $("#row-question").replaceWith("NOPE! The right answer is " + correctAnswer);
-            $("#row-0").append(charImage);
+
+            $("#row-one").append("NOPE! The right answer is " + correctAnswer);
+            $("#row-two").append(charImage);
+
+
+            setTimeout(nextQuestion, 1000 * 5);
+
 
 
 
@@ -238,22 +273,22 @@ $("#start-button").on("click", function() {
 
     // check if timer is 0 or click event happened
 
-    $("#col-answer-0").on("click", function () {
+    $("#row-two").on("click", function () {
         stop();
         checkIfCorrect(0);
     })
 
-    $("#col-answer-1").on("click", function () {
+    $("#row-three").on("click", function () {
         stop();
         checkIfCorrect(1);
     })
 
-    $("#col-answer-2").on("click", function () {
+    $("#row-four").on("click", function () {
         stop();
         checkIfCorrect(2);
     })
 
-    $("#col-answer-3").on("click", function () {
+    $("#row-five").on("click", function () {
         stop();
         checkIfCorrect(3);
     })
@@ -262,6 +297,15 @@ $("#start-button").on("click", function() {
 
 function nextQuestion()
 {
+
+    console.log("Next Question");
+    time = 30;
+    $("#row-one").empty();
+    $("#row-two").empty();
+    $("#row-three").empty();
+    $("#row-four").empty();
+    $("#row-five").empty();
+
     startTimer();
     getQuestionAndAnswers();
 
