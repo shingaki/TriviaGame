@@ -93,7 +93,7 @@ var trivaInput =
 
 
 var intervalID;
-var time = 30;
+var time = 31;
 var wins = 0;
 var losses = 0;
 var unanswered = 0;
@@ -123,6 +123,31 @@ function count() {
 
     var converted = timeConverter(time);
     console.log(converted);
+
+    if (converted === 0)
+    {
+            stop();
+            time = 31;
+
+        $("#row-one").empty();
+        $("#row-two").empty();
+        $("#row-three").empty();
+        $("#row-four").empty();
+        $("#row-five").empty();
+
+        unanswered = unanswered + 1;
+        charImage = $("<img>");
+        charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
+        charImage.addClass("image-answer");
+
+
+        $("#row-one").append("TIME IS OUT " + correctAnswer);
+        $("#row-two").append(charImage);
+
+
+        setTimeout(nextQuestion, 1000 * 5);
+
+    }
 
     $('#timer').text(converted);
 }
@@ -299,7 +324,7 @@ function nextQuestion()
 {
 
     console.log("Next Question");
-    time = 30;
+    time = 31;
     $("#row-one").empty();
     $("#row-two").empty();
     $("#row-three").empty();
@@ -311,6 +336,10 @@ function nextQuestion()
 
 
     // check if timer is 0 or click event happened
+
+    if (time === 0)
+    { console.log("TIME IS OUT");
+    }
 
     $("#col-answer-0").on("click", function () {
         stop();
@@ -331,6 +360,7 @@ function nextQuestion()
         stop();
         checkIfCorrect(3);
     })
+
 }
 
 
