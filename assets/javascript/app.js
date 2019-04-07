@@ -98,6 +98,7 @@ var wins = 0;
 var losses = 0;
 var unanswered = 0;
 var QID;
+var numberOfQuestions = 0;
 var numberOfAnswers = 4;
 var resultAnswer;
 
@@ -166,23 +167,33 @@ function stop() {
 
 // randomly select one of the Movies
 function getRandomNumber() {
-    var randomNumber = Math.floor(Math.random() * 10);
+    var randomNumber;
 
-    if (trivaInput[randomNumber].used === 'Y') {
+    randomNumber = Math.floor(Math.random() * 10);
+0
+    console.log("randNumber 0 what is it before matching" + trivaInput[randomNumber].used);
+
+    if (trivaInput[randomNumber].used === "Y") {
+        console.log("randNumber 1 already Y " + trivaInput[randomNumber].used + "what is the Random Number " + randomNumber);
         getRandomNumber();
     }
+    else {
+        trivaInput[randomNumber].used = "Y";
+        console.log("randNumber 2 set to Y " + trivaInput[randomNumber].used  + "what is the Random Number " + randomNumber);
+        QID = randomNumber;
 
-    return randomNumber;
+    }
+
 }
 
 
 function getQuestionAndAnswers()
 {
     // put the randomNumber into the QID to be used as the iterator
-    QID = getRandomNumber();
+    getRandomNumber();
 
     // set that the question has been used
-    trivaInput[QID].used = "Y";
+    numberOfQuestions = numberOfQuestions + 1;
 
     $("#row-one").text("");
     $("#row-two").text("");
@@ -218,12 +229,44 @@ function getQuestionAndAnswers()
 
 }
 
-
-function resetPage()
+function gameOver()
 {
-    var wins = 0;
-    var losses = 0;
-    var unanswered = 0;
+    console.log("Game Over");
+    $("#row-one").empty();
+    $("#row-two").empty();
+    $("#row-three").empty();
+    $("#row-four").empty();
+    $("#row-five").empty();
+
+    var textWins = "Wins: " + wins;
+    var textLoss = "Losses: " + losses;
+    var textUnanswered = "Unanswered " + unanswered;
+
+    var showWins = $("<div>");
+    showWins.addClass("answer-style col-md-10 text-center");
+    showWins.text(textWins);
+    $("#row-three").append(showWins);
+
+    var showLosses = $("<div>");
+    showLosses.addClass("answer-style col-md-10 text-center");
+    showLosses.text(textLoss);
+    $("#row-four").append(showLosses);
+
+    var showUnanswered = $("<div>");
+    showUnanswered.addClass("answer-style col-md-10 text-center");
+    showUnanswered.text(textUnanswered);
+    $("#row-five").append(showUnanswered);
+
+    resetGame();
+
+
+}
+
+function resetGame()
+{
+    wins = 0;
+    losses = 0;
+    unanswered = 0;
 
     // set all used = N
 }
@@ -323,44 +366,53 @@ $("#start-button").on("click", function() {
 function nextQuestion()
 {
 
-    console.log("Next Question");
-    time = 31;
-    $("#row-one").empty();
-    $("#row-two").empty();
-    $("#row-three").empty();
-    $("#row-four").empty();
-    $("#row-five").empty();
+    console.log("number of Questions " + numberOfQuestions);
+    console.log("triva Length" + trivaInput.length);
 
-    startTimer();
-    getQuestionAndAnswers();
+   if (numberOfQuestions === trivaInput.length)
+   {
+       // game is over
+       gameOver();
+   } else {
+
+       console.log("Next Question");
+       time = 31;
+       $("#row-one").empty();
+       $("#row-two").empty();
+       $("#row-three").empty();
+       $("#row-four").empty();
+       $("#row-five").empty();
+
+       startTimer();
+       getQuestionAndAnswers();
 
 
-    // check if timer is 0 or click event happened
+       // check if timer is 0 or click event happened
 
-    if (time === 0)
-    { console.log("TIME IS OUT");
-    }
+       if (time === 0) {
+           console.log("TIME IS OUT");
+       }
 
-    $("#col-answer-0").on("click", function () {
-        stop();
-        checkIfCorrect(0);
-    })
+       $("#col-answer-0").on("click", function () {
+           stop();
+           checkIfCorrect(0);
+       })
 
-    $("#col-answer-1").on("click", function () {
-        stop();
-        checkIfCorrect(1);
-    })
+       $("#col-answer-1").on("click", function () {
+           stop();
+           checkIfCorrect(1);
+       })
 
-    $("#col-answer-2").on("click", function () {
-        stop();
-        checkIfCorrect(2);
-    })
+       $("#col-answer-2").on("click", function () {
+           stop();
+           checkIfCorrect(2);
+       })
 
-    $("#col-answer-3").on("click", function () {
-        stop();
-        checkIfCorrect(3);
-    })
-
+       $("#col-answer-3").on("click", function () {
+           stop();
+           checkIfCorrect(3);
+       })
+   }
 }
 
 
