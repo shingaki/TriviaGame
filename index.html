@@ -16,66 +16,68 @@
 <body>
 <div id="img-as-background">
     <img src="./assets/images/triva_background.png"></div>
+
 <h1 class="heading">Prime Time Cartoons Triva!!!!</h1>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="timer-box timer" id="timer">30 Seconds</div>
+    <div class="row text-center">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="timer-box" id="timer">30 Seconds</div>
         </div>
     </div>
 </div>
 
 <div class="container">
-    <div class="row start-button ">
-        <div class="col-md-12">
-            <img class="displayed" id="start-button" src="./assets/images/start2.jpeg">
+    <div class="row text-center">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <img id="start-button" class="start-button-display" src="./assets/images/start2.jpeg">
         </div>
     </div>
 </div>
 
 <div class="container">
-    <div class="row question-style">
-        <div class="col-md-12">
+    <div class="row question-style text-center" id="row-question">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
             <div id="question"></div>
         </div>
     </div>
+</div>
 
     <div class="container">
-        <div class="row" id="row-1">
-            <div class="col-md-12">
+        <div class="row text-center answer-style" id="row-0">
+            <div class="col-md-3"></div>
+            <div class="col-md-3" id="col-answer-0">
+                <div id="answer0">
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-3" id="col-answer-1">
                 <div id="answer1">
                 </div>
             </div>
         </div>
     </div>
 
+
+
     <div class="container">
-        <div class="row" id="row-2">
-            <div class="col-md-12">
+        <div class="row text-center answer-style" id="row-1">
+            <div class="col-md-3"></div>
+            <div class="col-md-3" id="col-answer-2">
                 <div id="answer2">
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row" id="row-3">
-            <div class="col-md-12">
-                <div id="answer3">
-                </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-3" id="col-answer-3">
+                 <div id="answer3">
+                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="row" id="row-4">
-            <div class="col-md-12">
-                <div id="answer4">
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <!--image goes here-->
@@ -90,3 +92,5 @@
     <script type="text/javascript" src="./assets/javascript/app.js"></script>
 </body>
 </html>
+
+

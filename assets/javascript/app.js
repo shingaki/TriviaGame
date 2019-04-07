@@ -11,140 +11,80 @@ var trivaInput =
         {
             questionId: 0,
             question: "Who is the youngest child on Bob’s Burgers?",
-            answer1: "Louise",
-            answer2: "Tina",
-            answer3: "Gene",
-            answer4: "Linda",
-            status1: "C",
-            status2: "W",
-            status3: "W",
-            status4: "W",
+            answer: ["Louise", "Tina", "Gene", "Linda"],
+            status: ["C", "W", "W", "W"],
             used: "N",
             image: "louise.png"
         },
         {
             questionId: 1,
             question: "Who did Stewie want to kill in the first season of ‘Family Guy’?",
-            answer1: "Meg",
-            answer2: "Chris",
-            answer3: "Peter",
-            answer4: "Lois",
-            status1: "W",
-            status2: "W",
-            status3: "W",
-            status4: "C",
+            answer: ["Meg", "Chris", "Peter", "Lois"],
+            status: ["W", "W", "W", "C"],
             used: "N",
             image: "lois.png"
         },
         {
             questionId: 2,
             question: "What is the name of the boy band Tina is obsessed with in ‘Bob’s Burgers’?",
-            answer1: "Boys To Men",
-            answer2: "One Direction",
-            answer3: "Boyz 4 Now",
-            answer4: "Nsync",
-            status1: "W",
-            status2: "W",
-            status3: "C",
-            status4: "W",
+            answer: ["Boys To Men", "One Direction", "Boyz 4 Now", "Nsync"],
+            status: ["W", "W", "C", "W"],
             used: "N",
-            image: "boyz-for-now.png",
+            image: "boyz_for_now.png",
         },
         {
             questionId: 3,
             question: "What is the name of the dog in ‘The Simpsons’?",
-            answer1: "Pluto",
-            answer2: "Santa’s Little Helper",
-            answer3: "Goofy",
-            answer4: "Lassie",
-            status1: "W",
-            status2: "C",
-            status3: "W",
-            status4: "W",
+            answer: ["Pluto", "Santa’s Little Helper", "Goofy", "Lassie"],
+            status: ["W", "C", "W", "W"],
             used: "N",
             image: "simpsons_dog.png"
         },
         {
             questionId: 4,
             question: "What is Homer Simpson’s favorite food?",
-            answer1: "Pizza",
-            answer2: "Beer",
-            answer3: "Donuts",
-            answer4: "Hot Dog",
-            status1: "W",
-            status2: "W",
-            status3: "C",
-            status4: "W",
+            answer: ["Pizza", "Beer", "Donuts", "Hot Dog"],
+            status: ["W", "W", "C", "W"],
             used: "N",
             image: "donuts.png"
         },
         {
             questionId: 5,
             question: "Who voices the character Meg on the Family Guy?",
-            answer1: "Mila Kunis",
-            answer2: "Lacey Chabert",
-            answer3: "a and b",
-            answer4: "None of the above",
-            status1: "W",
-            status2: "W",
-            status3: "C",
-            status4: "W",
+            answer: ["Mila Kunis", "Lacey Chabert", "a and b", "None of the above"],
+            status: ["W", "W", "C", "W"],
             used: "N",
             image: "voiceOfMeg.png"
         },
         {
             questionId: 6,
             question: "Who is Bob’s biggest competition in Bob’s Burgers?",
-            answer1: "Jimmy Pesto",
-            answer2: "Joe Dirt",
-            answer3: "Paul Pasta",
-            answer4: "Hal Burger",
-            status1: "C",
-            status2: "W",
-            status3: "W",
-            status4: "W",
+            answer: ["Jimmy Pesto", "Joe Dirt", "Paul Pasta", "Hal Burger"],
+            status: ["C", "W", "W", "W"],
             used: "N",
             image: "jimmyPesto.png"
         },
         {
             questionId: 7,
             question: "What does Bart Simpson use to get around?",
-            answer1: "Scooter",
-            answer2: "Bike",
-            answer3: "Skateboard",
-            answer4: "Uber",
-            status1: "W",
-            status2: "W",
-            status3: "C",
-            status4: "W",
+            answer: ["Scooter", "Bike", "Skateboard", "Uber"],
+            status: ["W", "W", "C", "W"],
             used: "N",
             image: "bartSimpsonSkateboard.png"
         },
         {
             questionId: 8,
             question: "Where does Peter Griffin work in Family Guy?",
-            answer1: "Walmart",
-            answer2: "A Brewery",
-            answer3: "A Toy Factory",
-            answer4: "The Police Station",
-            status1: "W",
-            status2: "C",
-            status3: "W",
-            status4: "W",
+            answer: ["Walmart", "A Brewery", "A Toy Factory", "The Police Station"],
+            status: ["W", "C", "W", "W"],
             used: "N",
-            image: "theBrewery"
+            image: "theBrewery.png"
         },
         {
             questionId: 9,
             question: "Which character’ is famous for the saying “eat my shorts!",
-            answer1: "Bart Simpson",
-            answer2: "Gene",
-            answer3: "Brian",
-            answer4: "Cartman",
-            status1: "C",
-            status2: "W",
-            status3: "W",
-            status4: "W",
+            answer: ["Bart Simpson", "Gene", "Brian", "Cartman"],
+            status: ["C", "W", "W", "W"],
             used: "N",
             image: "eatMyShorts.png"
         },
@@ -155,12 +95,17 @@ var trivaInput =
 var intervalID;
 var time = 30;
 var wins = 0;
-var loses = 0;
+var losses = 0;
 var unanswered = 0;
+var QID;
+var numberOfAnswers = 4;
+var resultAnswer;
 
 var youWonMessage = "You Won";
 var youLostMessage = "Nope!";
 var timesUp = 'Time is Up!'
+
+var charImage;
 
 
 function startTimer()
@@ -187,54 +132,116 @@ function timeConverter(t) {
 function getRandomNumber() {
     var randomNumber = Math.floor(Math.random() * 10);
 
+    if (trivaInput[randomNumber].used === 'Y') {
+        getRandomNumber();
+    }
+
     return randomNumber;
 }
 
 
 function getQuestionAndAnswers()
 {
-    var QID = getRandomNumber();
-    $("#question").replaceWith(trivaInput[QID].question);
+    // put the randomNumber into the QID to be used as the iterator
+    QID = getRandomNumber();
 
+    // set that the question has been used
+    trivaInput[QID].used = "Y";
+
+    // put the answers into the tags and the hover
+    $("#question").replaceWith(trivaInput[QID].question);
     $("#question").addClass("question-style");
 
-    $('#answer1').replaceWith(trivaInput[QID].answer1);
+    // display the answers for the questions on the page
 
-    $("#row-1").addClass("answer-style answer-border");
+    for (var i = 0; trivaInput[QID].answer.length >= i; i++) {
 
-    $('#answer2').replaceWith(trivaInput[QID].answer2);
+        $("#answer" + i).replaceWith(trivaInput[QID].answer[i])
+        $("#col-answer-" + i).addClass("answer-style answer-border");
 
-    $("#row-2").addClass("answer-style answer-border");
-
-    $('#answer3').replaceWith(trivaInput[QID].answer3);
-
-    $("#row-3").addClass("answer-style answer-border");
-
-    $('#answer4').replaceWith(trivaInput[QID].answer4);
-
-    $("#row-4").addClass("answer-style answer-border");
+    }
 
 }
-
-
 
 
 function resetPage()
 {
     var wins = 0;
-    var loses = 0;
+    var losses = 0;
     var unanswered = 0;
 
     // set all used = N
-
 }
 
+function checkIfCorrect(answerID)
+{
 
+    console.log("answerID " + answerID);
+    console.log("QID " + QID);
+
+    console.log(trivaInput[QID].status[answerID]);
+        if (trivaInput[QID].status[answerID] === "C") {
+            console.log("the answer is right " + trivaInput[QID].status[answerID])
+            $("#row-question").empty();
+            $("#row-0").empty();
+            $("#row-1").empty();
+            wins = wins + 1;
+            charImage = $("<img>");
+            charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
+            console.log("image 1 = " + trivaInput[QID].image);
+            console.log("image = " + charImage);
+            $("#row-question").replaceWith("YOU WON!!!");
+            $("#row-0").append(charImage);
+
+
+        } else if (trivaInput[QID].status[answerID] === "W")
+        {
+            console.log("this answer is WRONG " + trivaInput[QID].status[answerID]);
+            $("#row-question").empty();
+            $("#row-0").empty();
+            $("#row-1").empty();
+            losses = losses + 1;
+            charImage = $("<img>");
+            charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
+            console.log("image 1 = " + trivaInput[QID].image);
+            console.log("image = " + charImage);
+            $("#row-question").replaceWith("YOU LOST!!");
+            $("#row-0").append(charImage);
+
+
+
+        }
+}
+
+// start button is clicked
 $("#start-button").on("click", function() {
     $("#start-button").addClass("hide-button");
     startTimer();
     getQuestionAndAnswers();
-})
+
+
+    // check if timer is 0 or click event happened
+
+    $("#col-answer-0").on("click", function () {
+        checkIfCorrect(0);
+    })
+
+    $("#col-answer-1").on("click", function () {
+        checkIfCorrect(1);
+    })
+
+    $("#col-answer-2").on("click", function () {
+        checkIfCorrect(2);
+    })
+
+    $("#col-answer-3").on("click", function () {
+        checkIfCorrect(3);
+    })
+} )
+
+
+
+
 
 
 
