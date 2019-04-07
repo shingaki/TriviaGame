@@ -105,6 +105,8 @@ var youWonMessage = "You Won";
 var youLostMessage = "Nope!";
 var timesUp = 'Time is Up!'
 
+var correctAnswer = "";
+
 var charImage;
 
 
@@ -126,6 +128,11 @@ function timeConverter(t) {
     var minutes = Math.floor(t / 60);
     var seconds = t - minutes * 60;""
     return seconds;
+}
+
+function stop() {
+
+    clearInterval(intervalID);
 }
 
 // randomly select one of the Movies
@@ -181,31 +188,40 @@ function checkIfCorrect(answerID)
 
     console.log(trivaInput[QID].status[answerID]);
         if (trivaInput[QID].status[answerID] === "C") {
-            console.log("the answer is right " + trivaInput[QID].status[answerID])
             $("#row-question").empty();
             $("#row-0").empty();
             $("#row-1").empty();
             wins = wins + 1;
             charImage = $("<img>");
             charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
-            console.log("image 1 = " + trivaInput[QID].image);
-            console.log("image = " + charImage);
+            charImage = addClass("image-answer")
+
+
             $("#row-question").replaceWith("YOU WON!!!");
             $("#row-0").append(charImage);
 
 
         } else if (trivaInput[QID].status[answerID] === "W")
         {
-            console.log("this answer is WRONG " + trivaInput[QID].status[answerID]);
+            correctAnswer = "";
             $("#row-question").empty();
             $("#row-0").empty();
             $("#row-1").empty();
             losses = losses + 1;
             charImage = $("<img>");
             charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
-            console.log("image 1 = " + trivaInput[QID].image);
-            console.log("image = " + charImage);
-            $("#row-question").replaceWith("YOU LOST!!");
+            charImage.addClass("image-answer");
+
+            for (var i = 0; trivaInput[QID].status.length > i; i++)
+            {
+                if (trivaInput[QID].status[i] === "C")
+                {
+                    correctAnswer = (trivaInput[QID].answer[i]);
+                }
+            }
+
+
+            $("#row-question").replaceWith("NOPE! The right answer is " + correctAnswer);
             $("#row-0").append(charImage);
 
 
@@ -223,21 +239,55 @@ $("#start-button").on("click", function() {
     // check if timer is 0 or click event happened
 
     $("#col-answer-0").on("click", function () {
+        stop();
         checkIfCorrect(0);
     })
 
     $("#col-answer-1").on("click", function () {
+        stop();
         checkIfCorrect(1);
     })
 
     $("#col-answer-2").on("click", function () {
+        stop();
         checkIfCorrect(2);
     })
 
     $("#col-answer-3").on("click", function () {
+        stop();
         checkIfCorrect(3);
     })
 } )
+
+
+function nextQuestion()
+{
+    startTimer();
+    getQuestionAndAnswers();
+
+
+    // check if timer is 0 or click event happened
+
+    $("#col-answer-0").on("click", function () {
+        stop();
+        checkIfCorrect(0);
+    })
+
+    $("#col-answer-1").on("click", function () {
+        stop();
+        checkIfCorrect(1);
+    })
+
+    $("#col-answer-2").on("click", function () {
+        stop();
+        checkIfCorrect(2);
+    })
+
+    $("#col-answer-3").on("click", function () {
+        stop();
+        checkIfCorrect(3);
+    })
+}
 
 
 

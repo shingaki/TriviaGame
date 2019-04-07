@@ -16,12 +16,6 @@
     text-align: center;
 }
 
-/*.timer {*/
-/*    font-style: italic;*/
-/*    font-size: 50px;*/
-/*    text-align: center;*/
-/*}*/
-
 .start-button-display {
     position: absolute;
     display: block;
@@ -31,7 +25,6 @@
     length: 25%;
 
 }
-
 
 
 #img-as-background img {
@@ -52,7 +45,7 @@
 
 .question-style {
     font-family: "Tahoma";
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
     color: black;
     padding-top: 25px;
@@ -60,7 +53,7 @@
 
 .answer-style {
     font-family: "Tahoma";
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
     color: black;
     padding-top: 25px;
@@ -73,5 +66,10 @@
     height: 15%;
     /*border: 0px black solid;*/
     background: pink;
+}
+
+.image-answer {
+    width: 150px;
+    height: 150px;
 }
 
