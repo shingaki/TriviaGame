@@ -194,7 +194,7 @@ function checkIfCorrect(answerID)
             wins = wins + 1;
             charImage = $("<img>");
             charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
-            charImage = addClass("image-answer")
+            charImage.addClass("image-answer")
 
 
             $("#row-question").replaceWith("YOU WON!!!");
