@@ -43,6 +43,10 @@
     visibility: hidden;
 }
 
+.show-button {
+    visibility: visible;
+}
+
 .question-style {
     font-family: "Tahoma";
     font-size: 20px;

@@ -94,23 +94,19 @@ var trivaInput =
 
 var intervalID;
 var time = 31;
+// var time = 5;
 var wins = 0;
 var losses = 0;
 var unanswered = 0;
 var QID;
 var numberOfQuestions = 0;
-var numberOfAnswers = 4;
-var resultAnswer;
-
-var youWonMessage = "You Won";
-var youLostMessage = "Nope!";
-var timesUp = 'Time is Up!'
 
 var correctAnswer = "";
 var clockRunning = false;
 
 
 var charImage;
+var correctAnswer;
 
 
 function startTimer()
@@ -123,12 +119,12 @@ function count() {
     time--;
 
     var converted = timeConverter(time);
-    console.log(converted);
 
     if (converted === 0)
     {
             stop();
             time = 31;
+        // time = 5;
 
         $("#row-one").empty();
         $("#row-two").empty();
@@ -140,6 +136,15 @@ function count() {
         charImage = $("<img>");
         charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
         charImage.addClass("image-answer");
+
+        for (var i = 0; trivaInput[QID].status.length > i; i++)
+        {
+            if (trivaInput[QID].status[i] === "C")
+            {
+                correctAnswer = (trivaInput[QID].answer[i]);
+            }
+        }
+
 
 
         $("#row-one").append("TIME IS OUT " + correctAnswer);
@@ -171,15 +176,12 @@ function getRandomNumber() {
 
     randomNumber = Math.floor(Math.random() * 10);
 0
-    console.log("randNumber 0 what is it before matching" + trivaInput[randomNumber].used);
 
     if (trivaInput[randomNumber].used === "Y") {
-        console.log("randNumber 1 already Y " + trivaInput[randomNumber].used + "what is the Random Number " + randomNumber);
         getRandomNumber();
     }
     else {
         trivaInput[randomNumber].used = "Y";
-        console.log("randNumber 2 set to Y " + trivaInput[randomNumber].used  + "what is the Random Number " + randomNumber);
         QID = randomNumber;
 
     }
@@ -189,6 +191,7 @@ function getRandomNumber() {
 
 function getQuestionAndAnswers()
 {
+
     // put the randomNumber into the QID to be used as the iterator
     getRandomNumber();
 
@@ -231,7 +234,6 @@ function getQuestionAndAnswers()
 
 function gameOver()
 {
-    console.log("Game Over");
     $("#row-one").empty();
     $("#row-two").empty();
     $("#row-three").empty();
@@ -257,26 +259,34 @@ function gameOver()
     showUnanswered.text(textUnanswered);
     $("#row-five").append(showUnanswered);
 
-    resetGame();
-
 
 }
 
 function resetGame()
 {
+
+    console.log("reset the Game");
     wins = 0;
     losses = 0;
     unanswered = 0;
 
-    // set all used = N
+    $("#row-one").empty();
+    $("#row-two").empty();
+    $("#row-three").empty();
+    $("#row-four").empty();
+    $("#row-five").empty();
+
+    $("#start-button").addClass("show-button");
+
+    for (var i = 0; trivaInput.length > i; i++)
+    {
+        trivaInput[i].used = "N";
+    }
 }
 
 function checkIfCorrect(answerID)
 {
 
-    console.log("answerID " + answerID);
-    console.log("QID " + QID);
-    console.log(trivaInput[QID].status[answerID]);
 
         if (trivaInput[QID].status[answerID] === "C") {
             wins = wins + 1;
@@ -291,7 +301,7 @@ function checkIfCorrect(answerID)
             $("#row-five").empty();
 
 
-            $("#row-one").append("YOU WON!!!");
+            $("#row-one").append("CORRECT!!!");
             $("#row-two").append(charImage);
 
             setTimeout(nextQuestion, 1000 * 5);
@@ -335,12 +345,13 @@ function checkIfCorrect(answerID)
 // start button is clicked
 $("#start-button").on("click", function() {
     $("#start-button").addClass("hide-button");
+""
+
     startTimer();
     getQuestionAndAnswers();
 
 
     // check if timer is 0 or click event happened
-
     $("#row-two").on("click", function () {
         stop();
         checkIfCorrect(0);
@@ -366,17 +377,19 @@ $("#start-button").on("click", function() {
 function nextQuestion()
 {
 
-    console.log("number of Questions " + numberOfQuestions);
-    console.log("triva Length" + trivaInput.length);
+    $("#start-button").addClass("hide-button");
+
 
    if (numberOfQuestions === trivaInput.length)
    {
-       // game is over
        gameOver();
+       console.log("after game is over");
+       setTimeout(resetGame, 1000 * 5);
+
    } else {
 
-       console.log("Next Question");
        time = 31;
+       // time = 5;
        $("#row-one").empty();
        $("#row-two").empty();
        $("#row-three").empty();
@@ -389,9 +402,9 @@ function nextQuestion()
 
        // check if timer is 0 or click event happened
 
-       if (time === 0) {
-           console.log("TIME IS OUT");
-       }
+       // if (time === 0) {
+       //     console.log("TIME IS OUT");
+       // }
 
        $("#col-answer-0").on("click", function () {
            stop();
@@ -423,25 +436,6 @@ function nextQuestion()
 
 
 
-// set the page initially
-// click on 'Start'
-// get random number
-// use random number - update that the question has been used
-// get the question and answer to display on the page
-// start the clock
-// if wrong answer
-// stop clock
-// increment losses by 1
-// show the image of the right answer
-// show the right answer
-// wait 5 seconds
-// check if last question
-// if not last question - then get the next random number and repeat
-// if last number then set the page to show the losses, wins, unanswered and the restart button
-// if restart button pushed
-// clear out the variables
-// start the clock
-// randomluy select the next question
 
 
 
@@ -454,11 +448,4 @@ function nextQuestion()
 
 
 
-// console.log(trivaInput[0]);
-// console.log(trivaInput[0].question);
-//
-// console.log(trivaInput[1]);
-
-console.log(trivaInput[0].questionId);
-console.log(trivaInput.length);
 
