@@ -93,20 +93,21 @@ var trivaInput =
 
 
 var intervalID;
-var time = 31;
-// var time = 5;
+var time = 30;
+// var time = 10;
 var wins = 0;
 var losses = 0;
 var unanswered = 0;
 var QID;
 var numberOfQuestions = 0;
+// var numberOfQuestions = 8;
+
 
 var correctAnswer = "";
 var clockRunning = false;
 
 
 var charImage;
-var correctAnswer;
 
 
 function startTimer()
@@ -122,15 +123,19 @@ function count() {
 
     if (converted === 0)
     {
-            stop();
-            time = 31;
-        // time = 5;
+        stop();
+        time = 30;
+        // time = 10;
 
         $("#row-one").empty();
         $("#row-two").empty();
         $("#row-three").empty();
         $("#row-four").empty();
         $("#row-five").empty();
+
+
+        $("#timer").text("Time Remaining: " + time + " Seconds");
+
 
         unanswered = unanswered + 1;
         charImage = $("<img>");
@@ -155,7 +160,7 @@ function count() {
 
     }
 
-    $('#timer').text(converted);
+    $("#timer").text("Time Remaining: " + converted + " Seconds");
 }
 
 function timeConverter(t) {
@@ -175,7 +180,7 @@ function getRandomNumber() {
     var randomNumber;
 
     randomNumber = Math.floor(Math.random() * 10);
-0
+    0
 
     if (trivaInput[randomNumber].used === "Y") {
         getRandomNumber();
@@ -270,6 +275,8 @@ function resetGame()
     losses = 0;
     unanswered = 0;
 
+
+
     $("#row-one").empty();
     $("#row-two").empty();
     $("#row-three").empty();
@@ -282,70 +289,77 @@ function resetGame()
     {
         trivaInput[i].used = "N";
     }
+
+    numberOfQuestions = 0;
+    time = 10;
 }
 
 function checkIfCorrect(answerID)
 {
 
 
-        if (trivaInput[QID].status[answerID] === "C") {
-            wins = wins + 1;
-            charImage = $("<img>");
-            charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
-            charImage.addClass("image-answer");
+    if (trivaInput[QID].status[answerID] === "C") {
+        wins = wins + 1;
+        charImage = $("<img>");
+        charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
+        charImage.addClass("image-answer");
 
-            $("#row-one").empty();
-            $("#row-two").empty();
-            $("#row-three").empty();
-            $("#row-four").empty();
-            $("#row-five").empty();
-
-
-            $("#row-one").append("CORRECT!!!");
-            $("#row-two").append(charImage);
-
-            setTimeout(nextQuestion, 1000 * 5);
+        $("#row-one").empty();
+        $("#row-two").empty();
+        $("#row-three").empty();
+        $("#row-four").empty();
+        $("#row-five").empty();
 
 
-        } else if (trivaInput[QID].status[answerID] === "W")
+        $("#row-one").append("CORRECT!!!");
+        $("#row-two").append(charImage);
+
+        setTimeout(nextQuestion, 1000 * 5);
+
+
+    } else if (trivaInput[QID].status[answerID] === "W")
+    {
+        correctAnswer = "";
+        losses = losses + 1;
+        charImage = $("<img>");
+        charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
+        charImage.addClass("image-answer");
+
+        for (var i = 0; trivaInput[QID].status.length > i; i++)
         {
-            correctAnswer = "";
-            losses = losses + 1;
-            charImage = $("<img>");
-            charImage.attr("src", "./assets/images/" + trivaInput[QID].image);
-            charImage.addClass("image-answer");
-
-            for (var i = 0; trivaInput[QID].status.length > i; i++)
+            if (trivaInput[QID].status[i] === "C")
             {
-                if (trivaInput[QID].status[i] === "C")
-                {
-                    correctAnswer = (trivaInput[QID].answer[i]);
-                }
+                correctAnswer = (trivaInput[QID].answer[i]);
             }
-
-            $("#row-one").empty();
-            $("#row-two").empty();
-            $("#row-three").empty();
-            $("#row-four").empty();
-            $("#row-five").empty();
-
-
-            $("#row-one").append("NOPE! The right answer is " + correctAnswer);
-            $("#row-two").append(charImage);
-
-
-            setTimeout(nextQuestion, 1000 * 5);
-
-
-
-
         }
+
+        $("#row-one").empty();
+        $("#row-two").empty();
+        $("#row-three").empty();
+        $("#row-four").empty();
+        $("#row-five").empty();
+
+
+        $("#row-one").append("NOPE! The right answer is " + correctAnswer);
+        $("#row-two").append(charImage);
+
+
+        setTimeout(nextQuestion, 1000 * 5);
+
+
+
+
+    }
 }
 
 // start button is clicked
 $("#start-button").on("click", function() {
     $("#start-button").addClass("hide-button");
-""
+
+
+    $("#start-button").removeClass("show-button");
+
+    console.log("Start-Button was Clicked Again")
 
     startTimer();
     getQuestionAndAnswers();
@@ -377,55 +391,57 @@ $("#start-button").on("click", function() {
 function nextQuestion()
 {
 
-    $("#start-button").addClass("hide-button");
 
 
-   if (numberOfQuestions === trivaInput.length)
-   {
-       gameOver();
-       console.log("after game is over");
-       setTimeout(resetGame, 1000 * 5);
+    if (numberOfQuestions === trivaInput.length)
+    {
+        gameOver();
+        console.log("after game is over");
+        setTimeout(resetGame, 1000 * 5);
 
-   } else {
+    } else {
 
-       time = 31;
-       // time = 5;
-       $("#row-one").empty();
-       $("#row-two").empty();
-       $("#row-three").empty();
-       $("#row-four").empty();
-       $("#row-five").empty();
+        time = 30;
+        // time = 10;
+        $("#row-one").empty();
+        $("#row-two").empty();
+        $("#row-three").empty();
+        $("#row-four").empty();
+        $("#row-five").empty();
 
-       startTimer();
-       getQuestionAndAnswers();
+        $('#timer').text("Time Remaining: " + time + " Seconds");
 
 
-       // check if timer is 0 or click event happened
+        startTimer();
+        getQuestionAndAnswers();
 
-       // if (time === 0) {
-       //     console.log("TIME IS OUT");
-       // }
 
-       $("#col-answer-0").on("click", function () {
-           stop();
-           checkIfCorrect(0);
-       })
+        // check if timer is 0 or click event happened
 
-       $("#col-answer-1").on("click", function () {
-           stop();
-           checkIfCorrect(1);
-       })
+        // if (time === 0) {
+        //     console.log("TIME IS OUT");
+        // }
 
-       $("#col-answer-2").on("click", function () {
-           stop();
-           checkIfCorrect(2);
-       })
+        $("#col-answer-0").on("click", function () {
+            stop();
+            checkIfCorrect(0);
+        })
 
-       $("#col-answer-3").on("click", function () {
-           stop();
-           checkIfCorrect(3);
-       })
-   }
+        $("#col-answer-1").on("click", function () {
+            stop();
+            checkIfCorrect(1);
+        })
+
+        $("#col-answer-2").on("click", function () {
+            stop();
+            checkIfCorrect(2);
+        })
+
+        $("#col-answer-3").on("click", function () {
+            stop();
+            checkIfCorrect(3);
+        })
+    }
 }
 
 
