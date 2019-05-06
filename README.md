@@ -10,22 +10,10 @@ Before I started building my application, I had to do some research. I researche
 ## My Approach
 
 - I captured the graphics needed for my game.
-- I put t
+- I created an array of objects. Each object contained a question and multiple choice answers as well as attributes and the path to the graphic for that particular answer. 
+- First, I created the code to display the question and answers (without the timers). 
+- Second, I created the code for the timer.
+- Third, I tied the timer to the display of the question and answers (switching to another question, etc. after 30 seconds).
+- Fourth, I created the restart game feature. 
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/shingaki/TriviaGame/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
