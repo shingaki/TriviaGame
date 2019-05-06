@@ -1,22 +1,16 @@
-## Welcome to GitHub Pages
+## Welcome Trivia Game
 
-You can use the [editor on GitHub](https://github.com/shingaki/TriviaGame/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This game is based on the prime time cartoons such as: Family Guy, The Simpsons, and American Dad. How familiar are you with these cartoons. This game will test your prime-time IQ. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## My Analysis
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
+Before I started building my application, I had to do some research. I researched to find the common things about each cartoon. Once I had a total of 10 items, I began writing my application. 
 ```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+## My Approach
 
-- Bulleted
-- List
+- I captured the graphics needed for my game.
+- I put t
 
 1. Numbered
 2. List
